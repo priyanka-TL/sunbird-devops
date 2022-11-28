@@ -6,11 +6,13 @@ package tests
 
 current_time := 1640235102
 iss := "https://sunbirded.org/auth/realms/sunbird"
+private_ingressgateway_ip := "1.2.3.4"
 
 test_rc_certificate_create_internal_request {
     data.main.allow.allowed
     with data.common.current_time as current_time
     with data.common.iss as iss
+    with data.common.private_ingressgateway_ip as private_ingressgateway_ip
     with input as
     {
       "attributes": {
@@ -65,6 +67,7 @@ test_rc_certificate_delete_internal_request {
     data.main.allow.allowed
     with data.common.current_time as current_time
     with data.common.iss as iss
+    with data.common.private_ingressgateway_ip as private_ingressgateway_ip
     with input as
     {
       "attributes": {
@@ -216,6 +219,23 @@ test_rc_certificate_search_public_key {
       },
       "parsed_body": {
         "filter": {}
+      }
+    }
+}
+
+test_rc_certificate_get_public_key {
+    data.main.allow.allowed
+    with data.common.current_time as current_time
+    with data.common.iss as iss
+    with input as
+    {
+      "attributes": {
+        "request": {
+          "http": {
+            "path": "/api/v1/PublicKey/search/1-ab8bb63e-d4f2-11ec-9a7d-07cc64ac49c1",
+            "method": "GET"
+          }
+        }
       }
     }
 }
